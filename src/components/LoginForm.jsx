@@ -13,13 +13,22 @@ function LoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post("/login", formData);
+      console.log('Attempting login with:', formData);
+      console.log('API URL:', import.meta.env.VITE_API_URL);
+      
+      const response = await axiosInstance.post("/api/login", formData);
+      console.log('Login response:', response.data);
+      
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
       toast.success('Login successful!');
       navigate('/dashboard');
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("Login error details:", {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message
+      });
       toast.error(error.response?.data?.error || 'Login failed');
     }
   };

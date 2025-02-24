@@ -13,16 +13,21 @@ function RegisterForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Submitting registration with:', formData);
+    console.log('API URL:', import.meta.env.VITE_API_URL);
+
     if (formData.password !== formData.confirmPassword) {
       toast.error('Passwords do not match');
       return;
     }
 
     try {
-      const response = await axiosInstance.post("/register", {
+      console.log('Making API request to:', `${import.meta.env.VITE_API_URL}/api/register`);
+      const response = await axiosInstance.post("/api/register", {
         email: formData.email,
         password: formData.password
       });
+      console.log('Registration response:', response.data);
       
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
