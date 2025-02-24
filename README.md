@@ -1,83 +1,83 @@
-# QuickSnips - Code Snippet Manager
+# BlogUI - Modern Blog Writing Platform
 
-A web application for managing and sharing code snippets with authentication.
+A modern, clean blog writing interface built with React.js and Vite, providing a seamless experience for writing and managing blog content.
+
+## Project Structure
+```
+BlogUI/
+└── codeEX/
+    ├── src/
+    │   ├── components/
+    │   │   ├── Dashboard.jsx
+    │   │   ├── LoginForm.jsx
+    │   │   ├── Navbar.jsx
+    │   │   ├── PrivateRoute.jsx
+    │   │   ├── RegisterForm.jsx
+    │   │   ├── SnippetForm.jsx
+    │   │   └── SnippetList.jsx
+    │   ├── pages/
+    │   │   ├── DashboardPage.jsx
+    │   │   ├── Home.jsx
+    │   │   ├── LoginPage.jsx
+    │   │   └── RegisterPage.jsx
+    │   ├── api/
+    │   │   └── axios.js
+    │   ├── App.jsx
+    │   ├── main.jsx
+    │   └── index.css
+    ├── public/
+    ├── index.html
+    ├── package.json
+    ├── vite.config.js
+    ├── tailwind.config.js
+    └── postcss.config.js
+```
 
 ## Features
 
 - 🔐 User Authentication (Register/Login)
-- 📝 Create and manage code snippets
-- 🗑️ Delete snippets
-- 👀 View detailed snippets
-- 🎨 Clean, modern UI with Tailwind CSS
+- 📝 Blog Post Creation and Management
+- 🎨 Modern UI with Tailwind CSS
+- 🚀 Fast Development with Vite
+- 📱 Responsive Design
 
 ## Tech Stack
 
 - Frontend:
-  - React
-  - React Router
-  - Axios
+  - React.js
   - Tailwind CSS
+  - React Router DOM
+  - Axios
   - React Hot Toast
-
-- Backend:
-  - Node.js
-  - Express
-  - MongoDB
-  - JWT Authentication
-  - bcrypt
 
 ## Getting Started
 
-1. Clone the repository:
+1. Navigate to the project directory:
 ```bash
-git clone https://github.com/realsubodh/QuickSnips.git
-cd QuickSnips
+cd BlogUI/codeEX
 ```
 
 2. Install dependencies:
 ```bash
-# Install frontend dependencies
-npm install
-
-# Install backend dependencies
-cd server
 npm install
 ```
 
-3. Set up environment variables:
-Create a .env file in the server directory:
-```env
-MONGODB_URI=mongodb://localhost:27017/snippets
-PORT=3001
-JWT_SECRET=your_secret_key
-```
-
-4. Start the development servers:
+3. Start the development server:
 ```bash
-# Start backend server (from server directory)
-node index.js
-
-# Start frontend development server (from root directory)
 npm run dev
 ```
 
-5. Open http://localhost:5173 in your browser
+4. Open http://localhost:5173 in your browser
 
-## API Endpoints
+## Available Scripts
 
-- POST /api/register - Register new user
-- POST /api/login - Login user
-- GET /api/snippets - Get all snippets (authenticated)
-- POST /api/snippets - Create new snippet (authenticated)
-- DELETE /api/snippets/:id - Delete snippet (authenticated)
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
 
 ## Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
