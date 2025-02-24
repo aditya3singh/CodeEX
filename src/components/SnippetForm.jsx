@@ -14,7 +14,7 @@ function SnippetForm() {
     }
 
     try {
-      const response = await axiosInstance.post('/snippets', {
+      const response = await axiosInstance.post('/api/snippets', {
         title,
         content,
         createdAt: new Date().toISOString()

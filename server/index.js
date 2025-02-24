@@ -7,20 +7,33 @@ require('dotenv').config();
 
 const app = express();
 
+// Middlewares
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true
+  origin: ['http://localhost:5173', 'https://your-vercel-app-url.vercel.app'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/snippets');
+// MongoDB Connection
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+    console.log('MongoDB Connected Successfully');
+  } catch (error) {
+    console.error('MongoDB Connection Error:', error);
+    process.exit(1);
+  }
+};
 
 // User Schema
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now }
+  password: { type: String, required: true }
 });
 
 const User = mongoose.model('User', userSchema);
@@ -47,86 +60,64 @@ const auth = async (req, res, next) => {
   }
 };
 
-// Add this after User model definition
-userSchema.pre('save', async function(next) {
-  // Check if email already exists
-  const existingUser = await User.findOne({ email: this.email });
-  if (existingUser) {
-    throw new Error('Email already exists');
-  }
-  next();
-});
-
-// Auth Routes
+// Registration Route
 app.post('/api/register', async (req, res) => {
   try {
     const { email, password } = req.body;
     
-    // Validate input
-    if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' });
-    }
-
-    // Check if user already exists
+    // Check if user exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: 'Email already registered' });
     }
 
     // Create new user
-    const hashedPassword = await bcrypt.hash(password, 8);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ email, password: hashedPassword });
     await user.save();
-    
+
     // Generate token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-    
-    // Send response
-    res.status(201).json({ 
-      user: { email: user.email, id: user._id }, 
-      token 
-    });
 
+    res.status(201).json({
+      message: 'Registration successful',
+      user: { email: user.email },
+      token
+    });
   } catch (error) {
     console.error('Registration error:', error);
-    res.status(400).json({ 
-      error: error.message || 'Registration failed' 
-    });
+    res.status(500).json({ error: 'Registration failed' });
   }
 });
 
+// Login Route
 app.post('/api/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Validate input
-    if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' });
-    }
-
     // Find user
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+      return res.status(401).json({ error: 'Invalid credentials' });
     }
-    
+
     // Check password
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return res.status(401).json({ error: 'Invalid credentials' });
     }
-    
+
     // Generate token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-    
-    // Send response
-    res.json({ 
-      user: { email: user.email, id: user._id }, 
-      token 
+
+    res.json({
+      message: 'Login successful',
+      user: { email: user.email },
+      token
     });
   } catch (error) {
     console.error('Login error:', error);
-    res.status(400).json({ error: 'Login failed' });
+    res.status(500).json({ error: 'Login failed' });
   }
 });
 
@@ -172,7 +163,11 @@ app.get('/api/users', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+const PORT = process.env.PORT || 3001;
+
+// Call connectDB before starting the server
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 }); 

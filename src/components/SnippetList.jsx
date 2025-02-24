@@ -13,7 +13,7 @@ function SnippetList() {
 
   const fetchSnippets = async () => {
     try {
-      const response = await axiosInstance.get('/snippets');
+      const response = await axiosInstance.get('/api/snippets');
       setSnippets(response.data);
     } catch (error) {
       console.error('Error fetching snippets:', error);
@@ -23,9 +23,9 @@ function SnippetList() {
 
   const handleDelete = async (id) => {
     try {
-      await axiosInstance.delete(`/snippets/${id}`);
+      await axiosInstance.delete(`/api/snippets/${id}`);
       toast.success('Snippet deleted successfully');
-      fetchSnippets(); // Refresh the list
+      fetchSnippets();
     } catch (error) {
       console.error('Error deleting snippet:', error);
       toast.error('Failed to delete snippet');
