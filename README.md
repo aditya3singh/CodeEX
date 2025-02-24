@@ -110,6 +110,7 @@ npm run dev
 - `npm run preview` - Preview production build
 - `npm run clean` - Clean Vite cache (if needed)
 
+To start the backend server, navigate to the server directory using `cd server`, then run `npm i` to install dependencies, followed by `npm i nodemon` to add nodemon. Finally, execute `npx nodemon index.js` to launch the server.
 ## Project Navigation
 
 1. Register/Login:
@@ -134,3 +135,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is licensed under the MIT License.
+
