@@ -1,79 +1,79 @@
-# CodeEX - Blog Writing Platform
+# QuickSnips - Code Snippet Manager
 
-CodeEX is a web-based blog writing and editing platform that provides a clean, distraction-free environment for creating and managing blog content.
+A web application for managing and sharing code snippets with authentication.
 
 ## Features
 
-- 📝 Rich text editor for blog writing
-- 💾 Auto-save functionality
-- 🎨 Markdown support
-- 📋 Clean and intuitive user interface
-- 🌙 Dark mode support
-- 📱 Responsive design for all devices
-- 📤 Easy content export options
-- 🔍 Preview mode for posts
+- 🔐 User Authentication (Register/Login)
+- 📝 Create and manage code snippets
+- 🗑️ Delete snippets
+- 👀 View detailed snippets
+- 🎨 Clean, modern UI with Tailwind CSS
 
 ## Tech Stack
 
-- Frontend: React.js
-- Styling: CSS/SCSS
-- Editor: Rich Text Editor
-- Backend: Node.js
-- API: RESTful
+- Frontend:
+  - React
+  - React Router
+  - Axios
+  - Tailwind CSS
+  - React Hot Toast
+
+- Backend:
+  - Node.js
+  - Express
+  - MongoDB
+  - JWT Authentication
+  - bcrypt
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js (v14 or higher)
-- npm (v6 or higher)
-
-### Installation
-
-1. Clone the repository
+1. Clone the repository:
 ```bash
-git clone https://github.com/aditya3singh/CodeEX.git
+git clone https://github.com/realsubodh/QuickSnips.git
+cd QuickSnips
 ```
 
-2. Navigate to the project directory
+2. Install dependencies:
 ```bash
-cd CodeEX
-```
+# Install frontend dependencies
+npm install
 
-3. Install dependencies
-```bash
+# Install backend dependencies
+cd server
 npm install
 ```
 
-4. Start the development server
-```bash
-npm start
+3. Set up environment variables:
+Create a .env file in the server directory:
+```env
+MONGODB_URI=mongodb://localhost:27017/snippets
+PORT=3001
+JWT_SECRET=your_secret_key
 ```
 
-The application will be available at `http://localhost:3000`
+4. Start the development servers:
+```bash
+# Start backend server (from server directory)
+node index.js
 
-## Usage
+# Start frontend development server (from root directory)
+npm run dev
+```
 
-1. Create a new blog post by clicking the "New Post" button
-2. Use the rich text editor to write and format your content
-3. Save your drafts automatically as you write
-4. Preview your post before publishing
-5. Publish or export your content when ready
+5. Open http://localhost:5173 in your browser
 
-## Key Features
+## API Endpoints
 
-- **Rich Text Editing**: Full-featured editor with formatting options
-- **Auto-saving**: Never lose your work with automatic saving
-- **Draft Management**: Keep track of all your blog drafts
-- **Categories & Tags**: Organize your content effectively
-- **Image Support**: Easy image uploading and management
-- **SEO Friendly**: Built-in SEO optimization tools
+- POST /api/register - Register new user
+- POST /api/login - Login user
+- GET /api/snippets - Get all snippets (authenticated)
+- POST /api/snippets - Create new snippet (authenticated)
+- DELETE /api/snippets/:id - Delete snippet (authenticated)
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the project
+1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
@@ -81,16 +81,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-Aditya Singh - [Your Email or Contact Information]
-
-Project Link: [https://github.com/aditya3singh/CodeEX](https://github.com/aditya3singh/CodeEX)
-
-## Acknowledgments
-
-- [React.js](https://reactjs.org/)
-- [Node.js](https://nodejs.org/)
-- [Draft.js](https://draftjs.org/) (or your preferred editor library)
+This project is licensed under the MIT License.
