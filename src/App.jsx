@@ -9,6 +9,8 @@ import DashboardPage from './pages/DashboardPage';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
+  console.log('API URL:', import.meta.env.VITE_API_URL);
+
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-[#F5F5F5]">
